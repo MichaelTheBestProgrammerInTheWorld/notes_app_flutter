@@ -106,7 +106,6 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
 
   Widget _buildNotesGrid(List<dynamic> notes, bool isTablet, WidgetRef ref, {required bool isPinned}) {
     if (isPinned) {
-      // Pinned notes are NOT reorderable as per requirements
       return SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: isTablet ? 3 : 2,
@@ -136,39 +135,39 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
         ),
       );
     } else {
-      // Others are reorderable
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final note = notes[index];
-            return Dismissible(
-              key: Key(note.id.toString()),
-              direction: DismissDirection.endToStart,
-              background: Container(
-                color: Theme.of(context).colorScheme.error,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 20),
-                child: const Icon(Icons.delete, color: Colors.white),
-              ),
-              confirmDismiss: (direction) async {
-                bool? result;
-                await showDialog(
-                  context: context,
-                  builder: (context) => ConfirmationDialog(
-                    title: t.common.confirm_delete_title,
-                    message: t.common.confirm_delete_message,
-                    confirmLabel: t.common.delete,
-                    isDestructive: true,
-                    onConfirm: () {
-                      result = true;
-                    },
-                  ),
-                );
-                if (result == true) {
-                  ref.read(notesViewModelProvider.notifier).deleteNote(note.id!);
-                }
-                return result;
-              },
+      return SliverReorderableList(
+        itemBuilder: (context, index) {
+          final note = notes[index];
+          return Dismissible(
+            key: Key(note.id.toString()),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: Theme.of(context).colorScheme.error,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20),
+              child: const Icon(Icons.delete, color: Colors.white),
+            ),
+            confirmDismiss: (direction) async {
+              bool? result;
+              await showDialog(
+                context: context,
+                builder: (context) => ConfirmationDialog(
+                  title: t.common.confirm_delete_title,
+                  message: t.common.confirm_delete_message,
+                  confirmLabel: t.common.delete,
+                  isDestructive: true,
+                  onConfirm: () {
+                    result = true;
+                  },
+                ),
+              );
+              if (result == true) {
+                ref.read(notesViewModelProvider.notifier).deleteNote(note.id!);
+              }
+              return result;
+            },
+            child: ReorderableDelayedDragStartListener(
+              index: index,
               child: NoteCard(
                 title: note.title,
                 snippet: NoteUtils.getSnippet(note.content),
@@ -180,10 +179,13 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
                   );
                 },
               ),
-            );
-          },
-          childCount: notes.length,
-        ),
+            ),
+          );
+        },
+        itemCount: notes.length,
+        onReorder: (oldIndex, newIndex) {
+          ref.read(notesViewModelProvider.notifier).reorderNotes(oldIndex, newIndex);
+        },
       );
     }
   }
@@ -197,7 +199,7 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
         confirmLabel: t.common.delete,
         isDestructive: true,
         onConfirm: () {
-          // Repository delete all logic
+          ref.read(notesViewModelProvider.notifier).deleteAllNotes();
         },
       ),
     );

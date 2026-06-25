@@ -70,6 +70,11 @@ class NotesViewModel extends _$NotesViewModel {
     await refreshNotes();
   }
 
+  Future<void> deleteAllNotes() async {
+    await _repository.deleteAllNotes();
+    await refreshNotes();
+  }
+
   Future<void> search(String query) async {
     if (query.isEmpty) {
       await refreshNotes();
