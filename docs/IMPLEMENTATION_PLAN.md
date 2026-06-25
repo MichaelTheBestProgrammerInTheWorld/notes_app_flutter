@@ -40,6 +40,41 @@ A feature-rich notes app with multimedia support, rich text styling, and cross-p
 - **Dark Mode:** Full support for system-wide dark mode toggle.
 - **Responsiveness:** Single design system that fits both phones and tablets perfectly.
 
+## UI & Design System
+
+### 1. Visual Language
+The app follows **Material 3 Expressive** design principles, focusing on tonal elevation, rounded shapes, and clear typography.
+
+- **Shapes:** Extra-large rounded corners (28dp) for cards and containers.
+- **Elevation:** Tonal overlays instead of heavy shadows for a modern, flat-yet-layered look.
+- **Animations:** Subtle scale transitions when opening notes and smooth reordering animations.
+
+### 2. Color Palette (FlexColorScheme - "Schemes.purpleBrown")
+A warm, sophisticated palette that reduces eye strain and feels personal.
+
+| Element | Light Mode | Dark Mode |
+| :--- | :--- | :--- |
+| **Primary** | #6750A4 (Deep Purple) | #D0BCFF (Light Violet) |
+| **Secondary** | #625B71 (Slate Purple) | #CCC2DC (Muted Lavender) |
+| **Surface** | #FFFBFE (Pure White) | #1C1B1F (Deep Charcoal) |
+| **Error** | #B3261E (Ruby Red) | #F2B8B5 (Soft Coral) |
+
+### 3. Typography (Google Fonts: Montserrat & Roboto)
+- **Headlines:** Montserrat (Bold) for a modern, clean look in "All Notes" and "Archive".
+- **Body Text:** Roboto (Regular) for maximum readability in note content.
+- **Note Titles:** Montserrat (Semi-Bold) for distinct hierarchy in the list view.
+
+### 4. Component Design
+- **Note Card:** A clean card with a subtle border in dark mode and tonal elevation in light mode. Shows title (max 2 lines), content snippet, and small icons for attachments.
+- **FAB:** Large, rounded square FAB for "Add Note".
+- **Search Bar:** Docked search bar at the top with integrated filter icons.
+- **Confirmation Dialog:** Material 3 Basic Dialog with clear "Destructive" styling for delete actions.
+
+### 5. Responsiveness & Adaptive Layout
+- **Phone:** Single column list view. Bottom navigation or Drawer.
+- **Tablet:** Two-pane layout or multi-column grid. Navigation Rail on the left to maximize horizontal space.
+- **Adaptive Components:** Use `LayoutBuilder` to switch between `ListView` and `GridView` based on screen width.
+
 ## Tech Stack
 
 > [!IMPORTANT]
