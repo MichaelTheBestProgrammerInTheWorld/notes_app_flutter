@@ -1,0 +1,32 @@
+{
+  "landing": {
+    "title": "ملاحظاتي",
+    "search_hint": "البحث في الملاحظات...",
+    "no_notes": "لا توجد ملاحظات بعد. اضغط على + لإضافة واحدة!",
+    "pinned": "المثبتة",
+    "others": "الأخرى"
+  },
+  "note_editor": {
+    "title_hint": "العنوان",
+    "content_hint": "ابدأ الكتابة...",
+    "save": "حفظ",
+    "discard": "تجاهل",
+    "edit_title": "تعديل الملاحظة",
+    "new_title": "ملاحظة جديدة",
+    "attachments": "المرفقات"
+  },
+  "archive": {
+    "title": "الأرشيف",
+    "no_archived": "لا توجد ملاحظات مؤرشفة."
+  },
+  "common": {
+    "delete": "حذف",
+    "archive": "أرشفة",
+    "restore": "استعادة",
+    "cancel": "إلغاء",
+    "confirm_delete_title": "حذف الملاحظة؟",
+    "confirm_delete_message": "هل أنت متأكد أنك تريد حذف هذه الملاحظة نهائيًا؟",
+    "confirm_delete_all_title": "حذف جميع الملاحظات؟",
+    "confirm_delete_all_message": "سيؤدي هذا إلى حذف جميع ملاحظاتك نهائيًا. لا يمكن التراجع عن هذا الإجراء."
+  }
+}
