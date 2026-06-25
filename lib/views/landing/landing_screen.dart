@@ -14,13 +14,18 @@ class LandingScreen extends ConsumerWidget {
     final isTablet = MediaQuery.sizeOf(context).width > 600;
 
     return Scaffold(
+import 'package:notes_app_flutter/views/archive/archive_screen.dart';
+
+// ... inside LandingScreen build
       appBar: AppBar(
         title: Text(t.landing.title),
         actions: [
           IconButton(
             icon: const Icon(Icons.archive),
             onPressed: () {
-              // Navigate to Archive
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ArchiveScreen()),
+              );
             },
           ),
           IconButton(
