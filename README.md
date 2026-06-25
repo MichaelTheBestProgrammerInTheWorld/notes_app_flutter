@@ -1,6 +1,6 @@
 # notes_app_flutter
 
-A new Flutter project.
+A notes app created in flutter by Google Gemini AI
 
 ## Getting Started
 
