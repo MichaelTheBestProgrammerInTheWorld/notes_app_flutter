@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notes_app_flutter/core/design_system/widgets/widgets.dart';
 import 'package:notes_app_flutter/core/l10n/strings.g.dart';
 import 'package:notes_app_flutter/view_models/notes_view_model.dart';
+import 'package:notes_app_flutter/views/note_detail/note_editor_screen.dart';
 
 class LandingScreen extends ConsumerWidget {
   const LandingScreen({super.key});
@@ -89,7 +90,9 @@ class LandingScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: () {
-          // Navigate to Note Editor
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const NoteEditorScreen()),
+          );
         },
         child: const Icon(Icons.add),
       ),
@@ -111,14 +114,16 @@ class LandingScreen extends ConsumerWidget {
             final note = notes[index];
             return NoteCard(
               title: note.title,
-              snippet: note.content, // Should be truncated
+              snippet: note.content,
               date: note.updatedAt,
               isPinned: note.isPinned,
               onTap: () {
-                // Edit note
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => NoteEditorScreen(note: note)),
+                );
               },
               onLongPress: () {
-                // Multi-select or Pin/Unpin
+                ref.read(notesViewModelProvider.notifier).togglePin(note);
               },
             );
           },
@@ -165,7 +170,9 @@ class LandingScreen extends ConsumerWidget {
                 date: note.updatedAt,
                 isPinned: note.isPinned,
                 onTap: () {
-                  // Edit note
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => NoteEditorScreen(note: note)),
+                  );
                 },
               ),
             );
