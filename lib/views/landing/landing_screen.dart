@@ -4,6 +4,8 @@ import 'package:notes_app_flutter/core/design_system/widgets/widgets.dart';
 import 'package:notes_app_flutter/core/l10n/strings.g.dart';
 import 'package:notes_app_flutter/view_models/notes_view_model.dart';
 import 'package:notes_app_flutter/views/note_detail/note_editor_screen.dart';
+import 'package:notes_app_flutter/views/archive/archive_screen.dart';
+import 'package:notes_app_flutter/core/utils/note_utils.dart';
 
 class LandingScreen extends ConsumerWidget {
   const LandingScreen({super.key});
@@ -14,9 +16,6 @@ class LandingScreen extends ConsumerWidget {
     final isTablet = MediaQuery.sizeOf(context).width > 600;
 
     return Scaffold(
-import 'package:notes_app_flutter/views/archive/archive_screen.dart';
-
-// ... inside LandingScreen build
       appBar: AppBar(
         title: Text(t.landing.title),
         actions: [
@@ -88,7 +87,7 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, stack) => Center(child: Text('Error: \$err')),
+              error: (err, stack) => Center(child: Text('Error: $err')),
             ),
           ),
         ],
