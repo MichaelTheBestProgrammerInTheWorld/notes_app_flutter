@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notes_app_flutter/core/design_system/theme.dart';
+import 'package:notes_app_flutter/core/di/injection.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupInjection();
   runApp(
     const ProviderScope(
       child: MyApp(),
