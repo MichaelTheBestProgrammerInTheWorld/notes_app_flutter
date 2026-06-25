@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notes_app_flutter/core/l10n/strings.g.dart';
+import 'package:notes_app_flutter/core/utils/multimedia_helper.dart';
+import 'package:notes_app_flutter/domain/entities/attachment.dart';
 import 'package:notes_app_flutter/domain/entities/note.dart';
 import 'package:notes_app_flutter/view_models/notes_view_model.dart';
-import 'package:uuid/uuid.dart';
+import 'package:notes_app_flutter/views/note_detail/voice_recorder_widget.dart';
 
 class NoteEditorScreen extends ConsumerStatefulWidget {
   final Note? note;
@@ -20,11 +23,13 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
   late QuillController _controller;
   late TextEditingController _titleController;
   final FocusNode _focusNode = FocusNode();
+  List<Attachment> _attachments = [];
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.note?.title ?? '');
+    _attachments = widget.note?.attachments.toList() ?? [];
     
     if (widget.note != null && widget.note!.content.isNotEmpty) {
       final doc = Document.fromJson(jsonDecode(widget.note!.content));
@@ -56,12 +61,14 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
           title: title,
           content: content,
           updatedAt: now,
+          attachments: _attachments,
         ) ??
         Note(
           title: title,
           content: content,
           createdAt: now,
           updatedAt: now,
+          attachments: _attachments,
         );
 
     if (widget.note == null) {
@@ -71,6 +78,12 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
     }
 
     if (mounted) Navigator.of(context).pop();
+  }
+
+  void _addAttachments(List<Attachment> newAttachments) {
+    setState(() {
+      _attachments.addAll(newAttachments);
+    });
   }
 
   @override
@@ -104,11 +117,9 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
           QuillToolbar.simple(
             configurations: QuillSimpleToolbarConfigurations(
               controller: _controller,
-              sharedConfigurations: const QuillSharedConfigurations(
-                locale: Locale('en'),
-              ),
             ),
           ),
+          if (_attachments.isNotEmpty) _buildAttachmentList(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -116,15 +127,57 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
                 configurations: QuillEditorConfigurations(
                   controller: _controller,
                   readOnly: false,
-                  sharedConfigurations: const QuillSharedConfigurations(
-                    locale: Locale('en'),
-                  ),
                 ),
               ),
             ),
           ),
           _buildMultimediaToolbar(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAttachmentList() {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _attachments.length,
+        itemBuilder: (context, index) {
+          final att = _attachments[index];
+          return Container(
+            width: 80,
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+            ),
+            child: Stack(
+              children: [
+                Center(
+                  child: Icon(
+                    att.type == 'image' ? Icons.image : 
+                    att.type == 'video' ? Icons.videocam :
+                    att.type == 'audio' ? Icons.mic : Icons.attach_file,
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, size: 16),
+                    onPressed: () {
+                      setState(() {
+                        _attachments.removeAt(index);
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -138,10 +191,32 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
       ),
       child: Row(
         children: [
-          IconButton(icon: const Icon(Icons.image), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.videocam), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.mic), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.attach_file), onPressed: () {}),
+          IconButton(
+            icon: const Icon(Icons.image),
+            onPressed: () async {
+              final newAtts = await MultimediaHelper.pickImages(context);
+              _addAttachments(newAtts);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.videocam),
+            onPressed: () async {
+              final newAtt = await MultimediaHelper.pickVideo(context);
+              if (newAtt != null) _addAttachments([newAtt]);
+            },
+          ),
+          VoiceRecorderWidget(
+            onStop: (path, name) {
+              _addAttachments([Attachment(type: 'audio', path: path, name: name)]);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.attach_file),
+            onPressed: () async {
+              final newAtt = await MultimediaHelper.pickFile();
+              if (newAtt != null) _addAttachments([newAtt]);
+            },
+          ),
         ],
       ),
     );

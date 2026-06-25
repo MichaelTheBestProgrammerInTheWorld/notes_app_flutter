@@ -119,7 +119,7 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
             final note = notes[index];
             return NoteCard(
               title: note.title,
-              snippet: note.content,
+              snippet: NoteUtils.getSnippet(note.content),
               date: note.updatedAt,
               isPinned: note.isPinned,
               onTap: () {
@@ -171,7 +171,7 @@ import 'package:notes_app_flutter/views/archive/archive_screen.dart';
               },
               child: NoteCard(
                 title: note.title,
-                snippet: note.content,
+                snippet: NoteUtils.getSnippet(note.content),
                 date: note.updatedAt,
                 isPinned: note.isPinned,
                 onTap: () {
