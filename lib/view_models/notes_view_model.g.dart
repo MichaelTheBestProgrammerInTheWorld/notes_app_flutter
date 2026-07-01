@@ -6,21 +6,49 @@ part of 'notes_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$notesViewModelHash() => r'adea136a4e7283f7bb8311c57cca397afb9e4f6b';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [NotesViewModel].
 @ProviderFor(NotesViewModel)
-final notesViewModelProvider =
-    AutoDisposeAsyncNotifierProvider<NotesViewModel, List<Note>>.internal(
-      NotesViewModel.new,
-      name: r'notesViewModelProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$notesViewModelHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final notesViewModelProvider = NotesViewModelProvider._();
 
-typedef _$NotesViewModel = AutoDisposeAsyncNotifier<List<Note>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class NotesViewModelProvider
+    extends $AsyncNotifierProvider<NotesViewModel, List<Note>> {
+  NotesViewModelProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'notesViewModelProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$notesViewModelHash();
+
+  @$internal
+  @override
+  NotesViewModel create() => NotesViewModel();
+}
+
+String _$notesViewModelHash() => r'ab15992077dea5314ccd0338474dfb915389e0d3';
+
+abstract class _$NotesViewModel extends $AsyncNotifier<List<Note>> {
+  FutureOr<List<Note>> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<Note>>, List<Note>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Note>>, List<Note>>,
+              AsyncValue<List<Note>>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

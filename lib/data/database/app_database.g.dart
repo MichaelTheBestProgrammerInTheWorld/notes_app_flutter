@@ -899,7 +899,7 @@ final class $$NotesTableReferences
   static MultiTypedResultKey<$AttachmentsTable, List<Attachment>>
   _attachmentsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.attachments,
-    aliasName: $_aliasNameGenerator(db.notes.id, db.attachments.noteId),
+    aliasName: 'notes__id__attachments__note_id',
   );
 
   $$AttachmentsTableProcessedTableManager get attachmentsRefs {
@@ -1235,9 +1235,8 @@ final class $$AttachmentsTableReferences
     extends BaseReferences<_$AppDatabase, $AttachmentsTable, Attachment> {
   $$AttachmentsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $NotesTable _noteIdTable(_$AppDatabase db) => db.notes.createAlias(
-    $_aliasNameGenerator(db.attachments.noteId, db.notes.id),
-  );
+  static $NotesTable _noteIdTable(_$AppDatabase db) =>
+      db.notes.createAlias('attachments__note_id__notes__id');
 
   $$NotesTableProcessedTableManager get noteId {
     final $_column = $_itemColumn<int>('note_id')!;

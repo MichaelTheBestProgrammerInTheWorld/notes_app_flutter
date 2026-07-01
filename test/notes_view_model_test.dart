@@ -35,7 +35,6 @@ void main() {
 
     when(mockRepository.getAllNotes()).thenAnswer((_) async => notes);
 
-    final viewModel = container.read(notesViewModelProvider.notifier);
     final state = await container.read(notesViewModelProvider.future);
 
     expect(state, notes);

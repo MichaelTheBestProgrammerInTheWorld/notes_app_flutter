@@ -56,8 +56,6 @@ class NotesViewModel extends _$NotesViewModel {
 
     // Separate pinned and unpinned
     final unpinned = notes.where((n) => !n.isPinned).toList();
-
-    if (newIndex > oldIndex) newIndex--;
     
     final item = unpinned.removeAt(oldIndex);
     unpinned.insert(newIndex, item);

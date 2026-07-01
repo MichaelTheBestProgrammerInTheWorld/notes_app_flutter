@@ -182,7 +182,7 @@ class LandingScreen extends ConsumerWidget {
           );
         },
         itemCount: notes.length,
-        onReorder: (oldIndex, newIndex) {
+        onReorderItem: (oldIndex, newIndex) {
           ref.read(notesViewModelProvider.notifier).reorderNotes(oldIndex, newIndex);
         },
       );
