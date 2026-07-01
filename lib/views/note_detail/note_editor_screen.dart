@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -114,20 +113,17 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          QuillToolbar.simple(
-            configurations: QuillSimpleToolbarConfigurations(
-              controller: _controller,
-            ),
+          QuillSimpleToolbar(
+            controller: _controller,
+            config: const QuillSimpleToolbarConfig(),
           ),
           if (_attachments.isNotEmpty) _buildAttachmentList(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: QuillEditor.basic(
-                configurations: QuillEditorConfigurations(
-                  controller: _controller,
-                  readOnly: false,
-                ),
+                controller: _controller,
+                config: const QuillEditorConfig(),
               ),
             ),
           ),
@@ -186,7 +182,7 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant)),
       ),
       child: Row(

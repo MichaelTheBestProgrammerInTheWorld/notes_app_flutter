@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Montserrat for headlines
-  static final String _headlineFont = GoogleFonts.montserrat().fontFamily!;
   // Roboto for body
   static final String _bodyFont = GoogleFonts.roboto().fontFamily!;
 
@@ -21,12 +19,11 @@ class AppTheme {
         alignedDropdown: true,
         useInputDecoratorThemeInDialogs: true,
         cardRadius: 28.0,
-        containerRadius: 28.0,
         fabRadius: 20.0,
       ),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
-      swapLegacyColors: true,
+      swapColors: true,
       fontFamily: _bodyFont,
       textTheme: GoogleFonts.robotoTextTheme().copyWith(
         displayLarge: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
@@ -54,12 +51,11 @@ class AppTheme {
         alignedDropdown: true,
         useInputDecoratorThemeInDialogs: true,
         cardRadius: 28.0,
-        containerRadius: 28.0,
         fabRadius: 20.0,
       ),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
-      swapLegacyColors: true,
+      swapColors: true,
       fontFamily: _bodyFont,
       textTheme: GoogleFonts.robotoTextTheme().copyWith(
         displayLarge: GoogleFonts.montserrat(fontWeight: FontWeight.bold, color: Colors.white),

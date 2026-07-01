@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:notes_app_flutter/domain/entities/attachment.dart';
 import 'package:path_provider/path_provider.dart';
@@ -6,7 +7,7 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:path/path.dart' as p;
 
 class MultimediaHelper {
-  static Future<List<Attachment>> pickImages(context, {int max = 5}) async {
+  static Future<List<Attachment>> pickImages(BuildContext context, {int max = 5}) async {
     final List<AssetEntity>? result = await AssetPicker.pickAssets(
       context,
       pickerConfig: AssetPickerConfig(
@@ -32,7 +33,7 @@ class MultimediaHelper {
     return attachments;
   }
 
-  static Future<Attachment?> pickVideo(context) async {
+  static Future<Attachment?> pickVideo(BuildContext context) async {
     final List<AssetEntity>? result = await AssetPicker.pickAssets(
       context,
       pickerConfig: const AssetPickerConfig(
@@ -75,7 +76,6 @@ class MultimediaHelper {
   static Future<File> _saveFileToAppDir(File file) async {
     final appDir = await getApplicationDocumentsDirectory();
     final fileName = p.basename(file.path);
-    final savedFile = await file.copy('\${appDir.path}/\$fileName');
-    return savedFile;
+    return file.copy(p.join(appDir.path, fileName));
   }
 }

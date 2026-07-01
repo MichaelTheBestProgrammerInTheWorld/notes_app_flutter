@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupInjection();
   runApp(
-    TranslationOverrides(
+    TranslationProvider(
       child: const ProviderScope(
         child: MyApp(),
       ),

@@ -5,8 +5,8 @@ class NoteUtils {
   static String getSnippet(String contentJson) {
     if (contentJson.isEmpty) return '';
     try {
-      final delta = Document.fromJson(jsonDecode(contentJson)).toDelta();
-      String plainText = delta.toPlainText();
+      final doc = Document.fromJson(jsonDecode(contentJson));
+      String plainText = doc.toPlainText();
       if (plainText.length > 100) {
         return '\${plainText.substring(0, 100)}...';
       }

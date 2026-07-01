@@ -55,7 +55,6 @@ class NotesViewModel extends _$NotesViewModel {
     if (notes == null) return;
 
     // Separate pinned and unpinned
-    final pinned = notes.where((n) => n.isPinned).toList();
     final unpinned = notes.where((n) => !n.isPinned).toList();
 
     if (newIndex > oldIndex) newIndex--;
